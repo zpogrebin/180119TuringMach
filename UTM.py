@@ -4,6 +4,7 @@ def right():
 	global pointer
 	if tape[pointer+1]==tape[-0]:
 		nn.append(char)
+
 	return 0
 
 def left():
@@ -34,18 +35,16 @@ for i in range (0,len(tapein)):
 
 #-----Initializing the instruction set
 instset = nn.empty((2,5)) # Initialize instruction set
-#Column Values instate | input | output | outstate | move 
+instset = nn.dtype(str)
+#Column Values instate | input | outstate | output | move 
 prog = open(progin)
-print prog.read() #testing
+print prog.read() #testing 
+###CURSOR###
 
 #-----Initializing global variables
 pointer=0
 state=0
 char= "#" 
-
-instset = nn.empty((2,5)) # Initialize instruction set
-# instate | input | output | outstate | move 
-tape = nn.empty((len(tapein))) #Initialize other
 
 for i in range (0,len(tapein)):
 	tape[i]=tapein[i]
