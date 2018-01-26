@@ -34,8 +34,7 @@ for i in range (0,len(tapein)):
 	i += 1 #Insert values
 
 #-----Initializing the instruction set
-instset = nn.empty((2,5)) # Initialize instruction set
-instset = nn.dtype(str)
+instset = nn.empty(2,5,dtype=str) # Initialize instruction set
 #Column Values instate | input | outstate | output | move 
 prog = open(progin)
 print prog.read() #testing 
@@ -44,11 +43,8 @@ print prog.read() #testing
 #-----Initializing global variables
 pointer=0
 state=0
-char= "#" 
-
-for i in range (0,len(tapein)):
-	tape[i]=tapein[i]
-	i += i
+char=prog.readline(4)
+print char
 
 #print instset
 #print tape
