@@ -82,5 +82,6 @@ while cont==True:
 	print state, "".join(tape.tapearray)
 
 #-----Ending
+print "\n\033[1m__________________________\033[0m"
 print "Initd tape:", tapein
 print "Final tape:", "".join(tape.tapearray)
