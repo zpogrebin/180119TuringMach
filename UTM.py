@@ -1,11 +1,7 @@
-import numpy as nn
-cont=True
 #-----Instruction search based on criteria state and inp
 def instsearch(st, iv):
 	for i in range(0, len(instset)):
-		templine = instset[i]
-		ststr = templine[0]
-		if int(ststr[1])==st and templine[1]==iv:
+		if int(instset[i][0][1])==st and instset[i][1]==iv:
 			return i
 	return -1
 
@@ -32,7 +28,6 @@ class Tape():
 			self.tapearray[self.pointer] = char
 	
 	def move(self, direction):
-		print self.pointer
 		if direction == "R":
 			if self.pointer == len(self.tapearray)-1:
 				self.tapearray.append(char)
@@ -42,17 +37,18 @@ class Tape():
 				self.tapearray.insert(0, char)
 			else:
 				self.pointer = self.pointer - 1
-		print self.pointer
 		return self.pointer
 
 #-----Obtaining Information
-print "\n\033[1m--Zev Pogrebin UTM v0.0 --\033[0m"
-progin = "sub.txt"
-diagnostic = False
+print "\n\033[1m---Zev Pogrebin UTM v0.0---\033[0m"
+headline = "\n\033[1m___________________________\033[0m"
 tapein = raw_input("Enter tape conents: ") #Obtain tape contents
-#progin = raw_input("Enter program path: ") #Obtain program file
-#diagnostic = input("Diagnostic prints?: ") #Diagnostic information
-print "\n\033[1m__________________________\033[0m"
+progin = raw_input("Enter program path: ") #Obtain program file
+if "y" in raw_input("Diagnostic prints?: "):
+	diagnostic=True
+else: 
+	diagnostic=False
+print headline
 print "Evaluating\033[1m",  tapein, "\033[0m"
 print "With instruction set\033[1m", progin, "\033[0m:"
 
@@ -66,22 +62,32 @@ with open(progin) as prog:
 	inst = prog.readline().rstrip()
 	while inst:
 		instset.append(inst.split(","))
-		inst = prog.readline().rstrip()
-tape = Tape(tapein)
+		inst = prog.readline().rstrip() #load program into instset
+tape = Tape(tapein) #init tape
+
+#-----diag output
+if diagnostic==True:
+	print "Initial state:", state
+	print "Set break chr:", char
+	print "initd pointer:",tape.pointer
+	print "instructions :"
+	for n in instset:
+		print n
+	print headline
 
 #-----Logic
-while cont==True:
+while True:
 	instline = instsearch(state, tape.gethead())
 	if instline == -1:
 		break
 	tape.writehead(instset[instline][3])
-	print instset[instline]
 	tape.pointer = tape.move(instset[instline][4])
-	print tape.pointer,
 	state = int(instset[instline][2][1])
-	print state, "".join(tape.tapearray)
-
+	if diagnostic==True:
+		print instset[instline]
+		print tape.pointer,
+		print state, "".join(tape.tapearray)
 #-----Ending
-print "\n\033[1m__________________________\033[0m"
+print headline
 print "Initd tape:", tapein
 print "Final tape:", "".join(tape.tapearray)
