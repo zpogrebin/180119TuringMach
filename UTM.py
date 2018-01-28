@@ -1,7 +1,7 @@
 #-----Instruction search based on criteria state and inp
 def instsearch(st, iv):
 	for i in range(0, len(instset)):
-		if int(instset[i][0][1])==st and instset[i][1]==iv:
+		if int(instset[i][0][1])==st and instset[i][1]==iv: #####PROBLEM
 			return i
 	return -1
 
@@ -30,13 +30,11 @@ class Tape():
 	def move(self, direction):
 		if direction == "R":
 			if self.pointer == len(self.tapearray)-1:
-				self.tapearray.append(char)
+				self.tapearray.append(initchar)
 			self.pointer = self.pointer + 1
 		if direction == "L":
 			if self.pointer == 0:
-				self.tapearray.insert(0, char)
-			else:
-				self.pointer = self.pointer - 1
+				self.tapearray.insert(0, initchar)
 		return self.pointer
 
 #-----Obtaining Information
@@ -59,6 +57,7 @@ instset = [] # Initialize instruction set
 with open(progin) as prog:
 	state = int(prog.readline().rstrip()[1])
 	char = prog.readline().rstrip()
+	initchar = prog.readline().rstrip()
 	inst = prog.readline().rstrip()
 	while inst:
 		instset.append(inst.split(","))
@@ -69,7 +68,8 @@ tape = Tape(tapein) #init tape
 if diagnostic==True:
 	print "Initial state:", state
 	print "Set break chr:", char
-	print "initd pointer:",tape.pointer
+	print "tape contents:", initchar
+	print "initd pointer:", tape.pointer
 	print "instructions :"
 	for n in instset:
 		print n
