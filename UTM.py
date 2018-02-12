@@ -1,7 +1,7 @@
 #-----Instruction search based on criteria state and inp
 def instsearch(st, iv):
 	for i in range(0, len(instset)):
-		if int(instset[i][0][1])==st and instset[i][1]==iv: #####PROBLEM
+		if int(instset[i][0][1:])==st and instset[i][1]==iv: #####PROBLEM
 			return i
 	return -1
 
@@ -28,7 +28,6 @@ class Tape():
 			self.tapearray[self.pointer] = char
 	
 	def move(self, direction):
-		if direction == "R":
 			if self.pointer == len(self.tapearray)-1:
 				self.tapearray.append(initchar)
 			self.pointer = self.pointer + 1
